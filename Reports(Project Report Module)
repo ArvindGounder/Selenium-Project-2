@@ -1,0 +1,161 @@
+package asignments;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+public class Selenium2 {
+public WebDriver driver;
+
+@BeforeTest
+public void System() {
+	System.setProperty("webdriver.chrome.driver",
+			"C:\\Users\\LENOVO\\Downloads\\chromedriver_win32 (1)\\chromedriver.exe");
+	driver = new ChromeDriver();
+}
+@Test(priority = 1,groups = "Login Page")
+public void LoginPage() {
+	driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+	driver.manage().window().maximize();
+	FileInputStream d = null;
+	try {
+		d = new FileInputStream("C:\\Users\\LENOVO\\Desktop\\Orange Hrm Project.xlsx");
+	} catch (FileNotFoundException e) {
+
+	}
+	XSSFWorkbook wb = null;
+	try {
+		wb = new XSSFWorkbook(d);
+	} catch (IOException e) {
+		
+	
+	}
+	XSSFSheet ws=wb.getSheet("Sheet1");
+//Username
+	String name=ws.getRow(1).getCell(1).getStringCellValue();
+	String username=ws.getRow(1).getCell(2).getStringCellValue();
+	driver.findElement(By.xpath(name)).sendKeys(username);
+//Password
+	String pwd=ws.getRow(2).getCell(1).getStringCellValue();
+	String pwd1=ws.getRow(2).getCell(2).getStringCellValue();
+	driver.findElement(By.xpath(pwd)).sendKeys(pwd1);
+//Login Button
+	String btn=ws.getRow(3).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(btn)).click();
+	try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		
+	}
+	}
+
+@Test(priority = 2,groups = "Time Module")
+public void Time()  {
+	FileInputStream d = null;
+	try {
+		d = new FileInputStream("C:\\Users\\LENOVO\\Desktop\\Orange Hrm Project.xlsx");
+	} catch (FileNotFoundException e) {
+
+	}
+	XSSFWorkbook wb = null;
+	try {
+		wb = new XSSFWorkbook(d);
+	} catch (IOException e) {
+		
+	
+	}
+	XSSFSheet ws=wb.getSheet("Sheet1");
+	
+//Username
+	String name=ws.getRow(4).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(name)).click();
+	driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
+
+@Test(priority = 3,groups = "Reports Module")
+public void reports() {
+	FileInputStream d = null;
+	try {
+		d = new FileInputStream("C:\\Users\\LENOVO\\Desktop\\Orange Hrm Project.xlsx");
+	} catch (FileNotFoundException e) {
+
+	}
+	XSSFWorkbook wb = null;
+	try {
+		wb = new XSSFWorkbook(d);
+	} catch (IOException e) {
+		
+	
+	}
+	
+	XSSFSheet ws=wb.getSheet("Sheet1");
+//Open the Reports module
+	String reports=ws.getRow(28).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(reports)).click();
+	String projectReports=ws.getRow(29).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(projectReports)).click();
+	try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+//Enter the Project name
+	String project=ws.getRow(30).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(project)).click();
+    String name=ws.getRow(30).getCell(2).getStringCellValue();
+    driver.findElement(By.xpath(project)).sendKeys(name);
+    try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+    driver.findElement(By.xpath(project)).sendKeys(Keys.ARROW_DOWN);
+    try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+    driver.findElement(By.xpath(project)).sendKeys(Keys.ENTER);
+    try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+ //Enter From Date
+    String dates=ws.getRow(31).getCell(1).getStringCellValue();
+	driver.findElement(By.xpath(dates)).click();
+    String from=ws.getRow(31).getCell(2).getStringCellValue();
+    driver.findElement(By.xpath(dates)).sendKeys(from);
+    try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+ //Enter To Date
+    String dates1=ws.getRow(32).getCell(1).getStringCellValue();
+   	driver.findElement(By.xpath(dates1)).click();
+    String to=ws.getRow(32).getCell(2).getStringCellValue();
+    driver.findElement(By.xpath(dates1)).sendKeys(to);
+    try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+ //Click on View
+    String view=ws.getRow(33).getCell(1).getStringCellValue();
+    driver.findElement(By.xpath(view)).click();
+    
+     
+	
+}
